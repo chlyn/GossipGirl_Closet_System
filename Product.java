@@ -23,6 +23,10 @@ public class Product {
         return price;
     }
 
+    public int getListingDate() {
+        return listingDate;
+    }
+
     public int getProductNumber() {
         return productNumber;
     }

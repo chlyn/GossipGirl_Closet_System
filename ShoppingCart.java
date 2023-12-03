@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class ShoppingCart {
         private ArrayList<Product> cartItems = new ArrayList<>();
@@ -24,5 +24,22 @@ public class ShoppingCart {
             }
         }
         
+        public void addProduct(Scanner scnr, Inventory inventory){
+            System.out.println("Enter the title of the product: ");
+            System.out.print("-> Product Title: ");
+            String productTitle = scnr.nextLine();
+
+            Product selectedProduct = inventory.getProductMap().get(productTitle);
+
+             if (selectedProduct != null) 
+             {
+              addProductToCart(selectedProduct);
+             } else 
+             {
+                 System.out.println("Product not found. Unable to add to the cart.");
+              }
+
+    }
+
     }
     
