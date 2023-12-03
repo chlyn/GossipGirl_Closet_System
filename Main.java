@@ -31,7 +31,8 @@ public class Main{
         System.out.println("      2) Check Out   ");
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args)
+    {
         Scanner scnr = new Scanner(System.in);
 
         //creating instance of login system
@@ -64,47 +65,8 @@ public class Main{
                     switch(choice)
                     {
                         case "1":
-                            System.out.println("\n________________Adding Product_________________\n");
-                            System.out.println("Please enter all required information.\n");
-
-                            // Gather product details from the admin
-                            ProductCategory category = null;
-                            while (category == null) 
-                            {
-                                System.out.println("Product Category (TShirt, Skirt, Jean, Blouse):");
-                                System.out.print("--> ");
-                                String categoryInput = scnr.next().toLowerCase(); //lowecase to make it easier to compare later
-
-                                for (ProductCategory enumValue : ProductCategory.values()) 
-                                {
-                                    if (enumValue.toString().toLowerCase().equals(categoryInput)) 
-                                    { //making lowercase to compare 
-                                        category = enumValue;
-                                        break;
-                                    }
-                                }
-
-                                //safefall for if user types it in incorrectly
-                                if (category == null) 
-                                {
-                                    System.out.println("\nInvalid category input. Please enter a valid category.\n");
-                                }
-                            }
-
-                            // DEBUG checking if valid category
-                            System.out.println("\nSelected Category: " + category);
-                            System.out.print("Product Price: $");
-                            double price = scnr.nextDouble();
-                            //this is the number that will be displayed to students
-                            System.out.print("Product Number: #"); 
-                            int productNumber = scnr.nextInt();
-                            // Read the leftover new line
-                            scnr.nextLine(); 
-                            // Assuming listingDate is the current time in milliseconds (we can change this later)
-                            int listingDate = (int) System.currentTimeMillis();
                             // Call the insertProduct method from Inventory
-                            
-                            inventory.insertProduct(category, price, productNumber, listingDate);
+                            inventory.insertProduct(scnr);
                             displayAdminMenu();
 
                             break;
@@ -125,6 +87,12 @@ public class Main{
                         case "4":
                             repeat = false;
                             break;
+
+                        default:
+                            System.out.println("\nInvalid Menu Choice. Please try again!");
+                            displayAdminMenu();
+                            break;
+
                     }
 
                 } while(repeat);
@@ -161,8 +129,6 @@ public class Main{
                             }
                         }while(addRepeat);
                     
-
-
                         break;
                     case "2": 
                         System.out.println("test 2");

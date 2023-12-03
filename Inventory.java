@@ -14,10 +14,47 @@ public class Inventory
     //START OF METHODS FOR ADMIN
 
     //INSERTING NEW PRODUCT FOR ADMIN
-    public void insertProduct(ProductCategory category, double price, int productNumber, int listingDatee) 
+    public void insertProduct(Scanner scnr) 
     {
+        System.out.println("\n________________Adding Product_________________\n");
+        System.out.println("Please enter all required information.\n");
+
+        // Gather product details from the admin
+        ProductCategory category = null; 
+        while (category == null) 
+        {
+            System.out.println("Product Category (TShirt, Skirt, Jean, Blouse):");
+            System.out.print("--> ");
+            String categoryInput = scnr.next().toLowerCase(); //lowecase to make it easier to compare later
+
+            for (ProductCategory enumValue : ProductCategory.values()) 
+            {
+                if (enumValue.toString().toLowerCase().equals(categoryInput)) 
+                { //making lowercase to compare 
+                    category = enumValue;
+                    break;
+                }
+            }
+
+            //safefall for if user types it in incorrectly
+            if (category == null) 
+            {
+                System.out.println("\nInvalid Category Input. Please Try Again!\n");
+            }
+        }
+
+        // DEBUG checking if valid category
+        System.out.println("\nSelected Category: " + category);
+        System.out.print("Product Price: $");
+        double price = scnr.nextDouble();
+        //this is the number that will be displayed to students
+        System.out.print("Product Number: #"); 
+        int productNumber = scnr.nextInt();
+        // Read the leftover new line
+        scnr.nextLine(); 
         String title = category.toString() + " #" + productNumber;
         int listingDate = (int) System.currentTimeMillis(); // Convert to int
+
         Product product = new Product(title, price, listingDate, category, productNumber);
         productMap.put(title, product);
         productList.add(product);
