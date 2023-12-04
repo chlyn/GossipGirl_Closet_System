@@ -9,8 +9,8 @@ public class Main{
         System.out.println("              1) Add Product");
         System.out.println("              2) Delete Product");
         System.out.println("              3) View Products");
-        System.out.println("              4) Exit\n");
-        System.out.println("_______________________________________________");
+        System.out.println("              4) Exit");
+        System.out.println("\n_______________________________________________");
         System.out.print("\n--> Please Enter Your Choice: ");
     }
 

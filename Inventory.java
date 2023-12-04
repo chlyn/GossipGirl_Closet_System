@@ -74,14 +74,24 @@ public class Inventory
         System.out.println("\n                Product List");
         System.out.println("   ----------------------------------------\n");
 
-        for (Product product : productList) 
+        if (productList.isEmpty())
         {
-            System.out.printf("%-25s %-30s %n","   Title:", product.title);
-            System.out.printf("%-25s %-30s %n","   Category:", product.category.toString());
-            System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
-            System.out.printf("%-25s #%-25d %n","   Product Number:", product.getProductNumber());
-            System.out.printf("%-25s %-25d %n","   Listing Date:", product.listingDate);
+            System.out.println("            No Products Available :(");
             System.out.println("\n   ----------------------------------------\n");
+
+        }
+
+        else 
+        {
+            for (Product product : productList) 
+            {
+                System.out.printf("%-25s %-30s %n","   Title:", product.title);
+                System.out.printf("%-25s %-30s %n","   Category:", product.category.toString());
+                System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
+                System.out.printf("%-25s #%-25d %n","   Product Number:", product.getProductNumber());
+                System.out.printf("%-25s %-25d %n","   Listing Date:", product.listingDate);
+                System.out.println("\n   ----------------------------------------\n");
+            }
         }
 
         System.out.println("_______________________________________________");
@@ -93,29 +103,42 @@ public class Inventory
     //AYUDA HERE AYUDA HERE
     public void deleteAdminProduct(Scanner scnr) 
     {
-        System.out.println("\n_______________Deleting Product________________\n");
-        System.out.println("Would you like to see a list of all your products? (Yes/No): ");
-        System.out.print("--> ");
-        String choice = scnr.nextLine();
+        System.out.println("\n_______________Deleting Product________________");
+        boolean repeat;
 
-        if (choice.trim().equalsIgnoreCase("Yes")) 
+        do
         {
-            viewAllProductsAdmin();
-        }
+            System.out.println("\nWould you like to see a list of all your products? (Yes/No): ");
+            System.out.print("--> ");
+            String choice = scnr.nextLine();
+            repeat = false;
+
+            if (choice.trim().equalsIgnoreCase("Yes")) 
+            {
+                viewAllProductsAdmin();
+            }
+
+            else if (!choice.trim().equalsIgnoreCase("No"))
+            {
+                System.out.println("\nInvalid Input. Please Try Again!");
+                repeat = true;
+            }
+
+        } while (repeat);
 
         System.out.println("\nEnter the title of the product you want to delete:");
         System.out.print("--> ");
-        String titleToDelete = scnr.nextLine();
+        String titleToDelete = scnr.nextLine().toLowerCase();
       
         // Check if the product exists
-        if (productMap.containsKey(titleToDelete)) 
+        if (productMap.keySet().stream().anyMatch(key -> key.equalsIgnoreCase(titleToDelete))) 
         {
 
             // Remove from productMap
             productMap.remove(titleToDelete);
 
             // Remove from productList
-            productList.removeIf(product -> product.title.equals(titleToDelete));
+            productList.removeIf(product -> product.title.equalsIgnoreCase(titleToDelete));
                         
             System.out.println("\nProduct Deleted Successfully!");
             
@@ -144,13 +167,13 @@ public class Inventory
 
     public void displayFilterMenu()
     {
-        System.out.println("\n\n______________Filter Option______________\n");
-            System.out.println("   1) Cheapest to Expensive");
-            System.out.println("   2) Expensive to Cheapest");
-            System.out.println("   3) Newest to Oldest");
-            System.out.println("   4) Oldest to Newest");
-
-            System.out.print("Please Choose a Filter Option: ");
+        System.out.println("\n_________________Filter Option_________________\n");
+        System.out.println("         1) Cheapest to Expensive");
+        System.out.println("         2) Expensive to Cheapest");
+        System.out.println("         3) Newest to Oldest");
+        System.out.println("         4) Oldest to Newest");
+        System.out.println("\n_______________________________________________");
+        System.out.print("\n--> Please Enter Your Choice: ");
     }
 
     //SORT PRODUCTS BASED ON PRICE OR DATE
@@ -224,7 +247,7 @@ public class Inventory
                             break;
 
                         default:
-                            System.out.println("Invalid filter choice. Please try again!");
+                            System.out.println("\nInvalid Filter Choice. Please Try Again!\n");
                             repeat = true;
                             break;
                     }
@@ -240,7 +263,7 @@ public class Inventory
 
             else
             {
-                System.out.println("Not a valid input, please try again!");
+                System.out.println("\nInvalid Input. Please Try Again!");
             }
 
         } while(isFilter);          
