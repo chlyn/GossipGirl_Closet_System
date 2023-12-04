@@ -30,4 +30,8 @@ public class Product {
     public int getProductNumber() {
         return productNumber;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }

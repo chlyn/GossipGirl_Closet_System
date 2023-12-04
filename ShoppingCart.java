@@ -10,7 +10,7 @@ public class ShoppingCart {
             return cartItems.size();
         }
 
-        public void displayCartItems(Scanner scnr) 
+        public void displayCartItems(Scanner scnr, Inventory inventory) 
         {
             System.out.println("_______________________________________________\n");
             System.out.println("             Shopping Cart Items");
@@ -36,11 +36,11 @@ public class ShoppingCart {
     
             }
 
-            cartOptions(scnr);
+            cartOptions(scnr, inventory);
 
         }
 
-        public void cartOptions(Scanner scnr)
+        public void cartOptions(Scanner scnr, Inventory inventory)
         {
             boolean repeat;
 
@@ -63,7 +63,7 @@ public class ShoppingCart {
                         break;
 
                     case "2":
-                        checkoutProduct(scnr);
+                        checkoutProduct(scnr, inventory);
                         break;
 
                     case "3":
@@ -82,18 +82,16 @@ public class ShoppingCart {
             } while (repeat);
 
         }
-
         
         public void addProduct(Scanner scnr, Inventory inventory)
         {
-            boolean repeat;
+            boolean repeat = true;
 
             do
             {
                 System.out.println("\nWould you like to add an item to cart? (Yes/No):"); 
                 System.out.print("--> ");
                 String addChoice = scnr.nextLine();
-                repeat = false;
 
                 if(addChoice.equalsIgnoreCase("YES"))
                 {
@@ -107,6 +105,7 @@ public class ShoppingCart {
 
                     if (selectedProduct != null) 
                     {
+                        repeat = false;
                         cartItems.add(selectedProduct);
                         System.out.println("\nProduct Added To Cart Successfully!");
                     } 
@@ -154,7 +153,14 @@ public class ShoppingCart {
 
         }
 
-        public void checkoutProduct(Scanner scnr)
+        public void clearAfterCheckout(Inventory inventory){
+            for (Product product : cartItems) {
+                inventory.removeProduct(product);
+            }
+            cartItems.clear();
+        }
+
+        public void checkoutProduct(Scanner scnr, Inventory inventory)
         {
             System.out.println("\n___________________Checkout____________________");
             
@@ -206,7 +212,7 @@ public class ShoppingCart {
                         System.out.printf("%-18s %-30s %n","   Address:", cardAddress);
                         System.out.println("\n   ----------------------------------------");
 
-                        cartItems.clear();
+                        clearAfterCheckout(inventory);
                         System.out.println("\n         Your Order Has Been Placed!!");
 
                     }

@@ -7,11 +7,41 @@ public class Inventory
     private ArrayList<Product> productList = new ArrayList<>();
     private ShoppingCart shoppingCart = new ShoppingCart();
 
+    //METHOD FOR RANDOM PRODUCTS AT START OF PROGRAM
+    public void autoGenerate() {
+        // Array to store product categories
+        ProductCategory[] categories = ProductCategory.values();
+
+        Random random = new Random();
+
+        for (int i = 0; i < 4; i++) {
+            
+            //for choosing category
+            ProductCategory category = categories[random.nextInt(categories.length)];
+
+            // Generate a random product number
+            int productNumber = random.nextInt(1000) + 1; // Adjust range as needed
+
+            // Generate a random price
+            double price = 10 + (100 - 10) * random.nextDouble();
+
+            int listingDate = (int) System.currentTimeMillis();
+
+            //Adding product to product class
+            String title = category.toString() + " #" + productNumber;
+            Product product = new Product(title, price, listingDate, category, productNumber);
+
+            // Add the product product map and list
+            productMap.put(title, product);
+            productList.add(product);
+        }
+        
+    }
+
+    //for shopping cart method
     public HashMap<String, Product> getProductMap() 
     {
-
         return productMap;
-
     }
         
     //START OF METHODS FOR ADMIN
@@ -320,14 +350,14 @@ public class Inventory
                     boolean found;
                     repeat = false;
 
-                    System.out.println("\nEnter the title to search for:");
-                    System.out.print("--> ");
-                    query = scnr.nextLine().toLowerCase();
                     found = false;
 
                     switch (choice) 
                     {
                         case "1":
+                            System.out.println("\nEnter the title to search for:");
+                            System.out.print("--> ");
+                            query = scnr.nextLine().toLowerCase();
 
                             System.out.println("\n_______________________________________________");
                             System.out.println("                 Shopping Items");
@@ -366,6 +396,9 @@ public class Inventory
                             break;
                         
                         case "2":
+                            System.out.println("\nEnter the category to search for (Tshirt, Jean, Skirt, Blouse):");
+                            System.out.print("--> ");
+                            query = scnr.nextLine().toLowerCase();
 
                             System.out.println("\n_______________________________________________");
                             System.out.println("                 Shopping Items");
@@ -374,8 +407,8 @@ public class Inventory
                             for (Product product : productList)
                             {
                                 String category = product.category.toString().toLowerCase();
-                                
-                                if (category.contains(query))
+
+                                if (category.equalsIgnoreCase(query))
                                 {
                                     viewProduct(product);
                                     found = true;
@@ -398,12 +431,19 @@ public class Inventory
 
                 } while (repeat);
 
+            }else if (searchChoice.equalsIgnoreCase("No")){
+                break;
             }
 
         } while (isSearch);
 
     }
 
-    
+    public void removeProduct(Product product) {
+        String title = product.getTitle();
+        productMap.remove(title);
+        productList.removeIf(p -> p.getTitle().equals(title));
+    }
+
 
 }

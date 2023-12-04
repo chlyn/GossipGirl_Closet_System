@@ -36,6 +36,7 @@ public class Main{
         //creating an instance of ShoppingCart
         ShoppingCart userCart = new ShoppingCart();
 
+        inventory.autoGenerate();
 
         boolean mainRepeat = true;
         int usertypeCode = 0;
@@ -116,7 +117,7 @@ public class Main{
                             break;
 
                         case "2": 
-                            userCart.displayCartItems(scnr);
+                            userCart.displayCartItems(scnr, inventory);
                             displayUserMenu();
 
                             break;
