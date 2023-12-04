@@ -16,19 +16,13 @@ public class Main{
 
     public static void displayUserMenu()
     {
-        System.out.println("_________Welcome to Gossip Girl Closet_________\n");
+        System.out.println("\n_________Welcome to Gossip Girl Closet_________\n");
         System.out.println("                Ready to Shop?\n");
         System.out.println("            1) Let's Go Shopping!  ");
         System.out.println("            2) Open Cart");
         System.out.println("            3) Exit");
         System.out.println("\n_______________________________________________");
         System.out.print("\n--> Please Enter Your Choice: ");
-    }
-
-    public static void cartOptions()
-    {
-        System.out.println("      1) Delete Items   ");
-        System.out.println("      2) Check Out   ");
     }
 
     public static void main(String[] args)
@@ -78,13 +72,15 @@ public class Main{
                             break;
 
                         case "3": 
-                            inventory.viewAllProductsAdmin();// PRINTS OUT ALL PRODUCTS IN LIST
+                            inventory.viewAllProducts(true);// PRINTS OUT ALL PRODUCTS IN LIST
                             inventory.sortProduct(scnr, true, true);
     
                             displayAdminMenu();
 
                             break;
+
                         case "4":
+                            System.out.println("\nThank You For Shopping With Us!!");
                             repeat = false;
                             break;
 
@@ -101,51 +97,48 @@ public class Main{
             
             else if (usertypeCode == 2)
             { //user options
-            boolean repeat = true;
-                do {
-                    displayUserMenu();
+                boolean repeat = true;
+                displayUserMenu();
+                do 
+                {
                     String choice = scnr.nextLine();
 
-                switch(choice){
-                    case "1":
+                    switch(choice)
+                    {
+                        case "1":
 
-                        inventory.viewAllProductsUser();
-                        inventory.sortProduct(scnr, false, true);
+                            inventory.viewAllProducts(false);
+                            inventory.sortProduct(scnr, false, true);
+                            userCart.addProduct(scnr, inventory);
+                            displayUserMenu();
+                        
+                            break;
 
-                        boolean addRepeat = true;
-                        do{
-                            System.out.println("Add item to cart? (Yes/No): "); 
-                            System.out.print("-> Choice: ");
-                            String addChoice = scnr.nextLine();
+                        case "2": 
+                            userCart.displayCartItems(scnr);
+                            displayUserMenu();
 
-                            if(addChoice.equalsIgnoreCase("YES")){
-                                userCart.addProduct(scnr, inventory);
-                            }
-                            else if (addChoice.equalsIgnoreCase("NO")){
-                            addRepeat = false;
-                            }
-                            else{
-                                System.out.println("Not a valid input, please try again!");
-                            }
-                        }while(addRepeat);
-                    
-                        break;
-                    case "2": 
-                        System.out.println("test 2");
-                
-                        break;
-                    case "3":
-                        System.out.println("test 3");
-                        repeat = false;
-                        break;
-                }
+                            break;
+                            
+                        case "3":
+                            System.out.println("\nThank You For Shopping With Us!!");
+                            repeat = false;
+                            break;
 
-            }while(repeat);
+                        default:
+                            System.out.println("\nInvalid Menu Choice. Please try again!");
+                            displayAdminMenu();
+                            break;
+                        
+                    }
+
+                } while(repeat);
 
             }
+
             else if (usertypeCode == 3)
             {
-                System.out.println("Thank you!");
+                System.out.println("\nThank You For Shopping With Us!!");
                 mainRepeat = false;
             }
             

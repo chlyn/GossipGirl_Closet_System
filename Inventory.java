@@ -2,13 +2,16 @@ import java.util.*;
 
 public class Inventory 
 {
+
     private HashMap<String, Product> productMap = new HashMap<>();
     private ArrayList<Product> productList = new ArrayList<>();
     private ShoppingCart shoppingCart = new ShoppingCart();
 
     public HashMap<String, Product> getProductMap() 
     {
+
         return productMap;
+
     }
         
     //START OF METHODS FOR ADMIN
@@ -16,6 +19,7 @@ public class Inventory
     //INSERTING NEW PRODUCT FOR ADMIN
     public void insertProduct(Scanner scnr) 
     {
+
         System.out.println("\n________________Adding Product_________________\n");
         System.out.println("Please enter all required information.\n");
 
@@ -23,24 +27,32 @@ public class Inventory
         ProductCategory category = null; 
         while (category == null) 
         {
+
             System.out.println("Product Category (TShirt, Skirt, Jean, Blouse):");
             System.out.print("--> ");
             String categoryInput = scnr.next().toLowerCase(); //lowecase to make it easier to compare later
 
             for (ProductCategory enumValue : ProductCategory.values()) 
             {
+
                 if (enumValue.toString().toLowerCase().equals(categoryInput)) 
                 { //making lowercase to compare 
+
                     category = enumValue;
                     break;
+
                 }
+
             }
 
             //safefall for if user types it in incorrectly
             if (category == null) 
             {
+
                 System.out.println("\nInvalid Category Input. Please Try Again!\n");
+            
             }
+
         }
 
         // DEBUG checking if valid category
@@ -68,7 +80,7 @@ public class Inventory
     }
 
     //VIEWING ALL PRODUCTS FOR ADMIN
-    public void viewAllProductsAdmin()
+    public void viewAllProducts(boolean isAdmin)
     {
         System.out.println("\n_______________________________________________");
         System.out.println("\n                Product List");
@@ -76,6 +88,7 @@ public class Inventory
 
         if (productList.isEmpty())
         {
+
             System.out.println("            No Products Available :(");
             System.out.println("\n   ----------------------------------------\n");
 
@@ -83,15 +96,34 @@ public class Inventory
 
         else 
         {
-            for (Product product : productList) 
+
+            if (isAdmin)
             {
-                System.out.printf("%-25s %-30s %n","   Title:", product.title);
-                System.out.printf("%-25s %-30s %n","   Category:", product.category.toString());
-                System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
-                System.out.printf("%-25s #%-25d %n","   Product Number:", product.getProductNumber());
-                System.out.printf("%-25s %-25d %n","   Listing Date:", product.listingDate);
-                System.out.println("\n   ----------------------------------------\n");
+
+                for (Product product : productList) 
+                {
+                    System.out.printf("%-25s %-30s %n","   Title:", product.title);
+                    System.out.printf("%-25s %-30s %n","   Category:", product.category.toString());
+                    System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
+                    System.out.printf("%-25s #%-25d %n","   Product Number:", product.getProductNumber());
+                    System.out.printf("%-25s %-25d %n","   Listing Date:", product.listingDate);
+                    System.out.println("\n   ----------------------------------------\n");
+                }
+
             }
+
+            else
+            {
+
+                for (Product product : productList) 
+                {
+                    System.out.printf("%-25s %-30s %n","   Title:", product.title);
+                    System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
+                    System.out.println("\n   ----------------------------------------\n");
+                }  
+
+            }
+
         }
 
         System.out.println("_______________________________________________");
@@ -108,6 +140,7 @@ public class Inventory
 
         do
         {
+
             System.out.println("\nWould you like to see a list of all your products? (Yes/No): ");
             System.out.print("--> ");
             String choice = scnr.nextLine();
@@ -115,30 +148,34 @@ public class Inventory
 
             if (choice.trim().equalsIgnoreCase("Yes")) 
             {
-                viewAllProductsAdmin();
+
+                viewAllProducts(true);
+
             }
 
             else if (!choice.trim().equalsIgnoreCase("No"))
             {
+
                 System.out.println("\nInvalid Input. Please Try Again!");
                 repeat = true;
+
             }
 
         } while (repeat);
 
         System.out.println("\nEnter the title of the product you want to delete:");
         System.out.print("--> ");
-        String titleToDelete = scnr.nextLine().toLowerCase();
+        String productDelete = scnr.nextLine();
       
         // Check if the product exists
-        if (productMap.keySet().stream().anyMatch(key -> key.equalsIgnoreCase(titleToDelete))) 
+        if (productMap.keySet().stream().anyMatch(key -> key.equalsIgnoreCase(productDelete))) 
         {
 
             // Remove from productMap
-            productMap.remove(titleToDelete);
+            productMap.remove(productDelete);
 
             // Remove from productList
-            productList.removeIf(product -> product.title.equalsIgnoreCase(titleToDelete));
+            productList.removeIf(product -> product.title.equalsIgnoreCase(productDelete));
                         
             System.out.println("\nProduct Deleted Successfully!");
             
@@ -146,25 +183,14 @@ public class Inventory
 
         else 
         {
-            System.out.println("\nProduct not found. Unable to delete.");
+
+            System.out.println("\nProduct Not Found. Unable To Delete.");
+
         }
 
     }
 
     //START OF METHODS FOR USERS
-    public void viewAllProductsUser() 
-    {
-        System.out.println("All Products:");
-        System.out.println("------------------------");
-
-        for (Product product : productList) {
-            System.out.println("Title: " + product.title);
-            System.out.println("Price: $" + product.getPrice());  
-            System.out.println("------------------------");
-        }
-
-    }
-
     public void displayFilterMenu()
     {
         System.out.println("\n_________________Filter Option_________________\n");
@@ -181,75 +207,56 @@ public class Inventory
     {
         do 
         {
+
             System.out.println("\nWould you like to filter items? (Yes/No):");
             System.out.print("--> ");
             String filterChoice = scnr.nextLine();
 
             if (filterChoice.equalsIgnoreCase("YES"))
             {
+
                 boolean repeat;
 
                 do
                 {
+
                     displayFilterMenu();
                     String choice = scnr.nextLine();
                     repeat = false;
 
                     switch (choice) 
                     {
+
                         case "1":
                             Collections.sort(productList, Comparator.comparingDouble(Product::getPrice));
-                            
-                            if (isAdmin) 
-                            { 
-                                viewAllProductsAdmin();
-                            }
-                            else 
-                            { 
-                                viewAllProductsUser(); 
-                            }
+                            viewAllProducts(isAdmin);
+
                             break;
                         
                         case "2":
                             Collections.sort(productList, Comparator.comparingDouble(Product::getPrice).reversed());
-                            if (isAdmin)
-                            {
-                                viewAllProductsAdmin();
-                            }
-                            else
-                            {
-                                viewAllProductsUser();
-                            }
+                            viewAllProducts(isAdmin);
+
                             break;
                         
                         case "3":
                             Collections.sort(productList, Comparator.comparingInt(Product::getListingDate).reversed());
-                            if (isAdmin)
-                            {
-                                viewAllProductsAdmin();
-                            }
-                            else
-                            {
-                                viewAllProductsUser();
-                            }
+                            viewAllProducts(isAdmin);
+
                             break;
 
                         case "4":
                             Collections.sort(productList, Comparator.comparingInt(Product::getListingDate));
-                            if (isAdmin)
-                            {
-                                viewAllProductsAdmin();
-                            }
-                            else
-                            {
-                                viewAllProductsUser();
-                            }
+                            viewAllProducts(isAdmin);
+
                             break;
 
                         default:
                             System.out.println("\nInvalid Filter Choice. Please Try Again!\n");
                             repeat = true;
+                            
                             break;
+
                     }
 
                 } while (repeat);
@@ -258,12 +265,16 @@ public class Inventory
 
             else if (filterChoice.equalsIgnoreCase("NO"))
             {
+
                 isFilter = false;
+
             }
 
             else
             {
+
                 System.out.println("\nInvalid Input. Please Try Again!");
+                
             }
 
         } while(isFilter);          
@@ -333,6 +344,7 @@ public class Inventory
                     {
                         System.out.println("No products found.");
                     }
+
                     break;
                 
                 case "2":
@@ -355,6 +367,7 @@ public class Inventory
                     {
                         System.out.println("No products found.");
                     }
+                    
                     break;
 
                 default:
