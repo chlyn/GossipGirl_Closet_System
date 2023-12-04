@@ -33,7 +33,9 @@ public class ShoppingCart {
                     System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
                     System.out.println("\n   ----------------------------------------\n");
                 }
-    
+
+                System.out.println("             Cart Size: " + getCartSize() + " Items\n");
+
             }
 
             cartOptions(scnr, inventory);

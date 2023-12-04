@@ -359,7 +359,7 @@ public class Inventory
                             System.out.print("--> ");
                             query = scnr.nextLine().toLowerCase();
 
-                            System.out.println("\n_______________________________________________");
+                            System.out.println("\n_______________________________________________\n");
                             System.out.println("                 Shopping Items");
                             System.out.println("   ----------------------------------------\n");
 
@@ -374,6 +374,8 @@ public class Inventory
                                     found = true;
                                 }
                             }
+
+                            System.out.println("\n_______________________________________________\n");
 
                             // IDK if we still need this
                             // for (Product product : productList)
@@ -400,7 +402,7 @@ public class Inventory
                             System.out.print("--> ");
                             query = scnr.nextLine().toLowerCase();
 
-                            System.out.println("\n_______________________________________________");
+                            System.out.println("\n_______________________________________________\n");
                             System.out.println("                 Shopping Items");
                             System.out.println("   ----------------------------------------\n");
 
@@ -414,6 +416,8 @@ public class Inventory
                                     found = true;
                                 }
                             }
+
+                            System.out.println("\n_______________________________________________\n");
 
                             if (!found)
                             {
