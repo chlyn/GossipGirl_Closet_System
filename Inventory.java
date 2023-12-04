@@ -283,101 +283,125 @@ public class Inventory
 
     public void displaySearchMenu()
     {
-        System.out.println("\n\n______________Search Option______________\n");
-            System.out.println("   1) Search Based On Title");
-            System.out.println("   2) Search Based On Category");
-
-            System.out.print("Please Choose a Filter Option: ");
+        System.out.println("\n_________________Search Option_________________\n");
+        System.out.println("           1) Search Based On Title");
+        System.out.println("           2) Search Based On Category");
+        System.out.println("\n_______________________________________________");
+        System.out.print("\n-->Please Enter Your Choice: ");
     }
 
     public void viewProduct(Product product)
     {
-        System.out.println("------------------------");
-        System.out.println("Title: " + product.title);
-        System.out.println("Price: $" + product.getPrice());  
-        System.out.println("------------------------");    }
+        System.out.printf("%-25s %-30s %n","   Title:", product.title);
+        System.out.printf("%-25s $%-29.2f %n","   Price:", product.getPrice());
+        System.out.println("\n   ----------------------------------------\n");
+    }
 
     // SEARCH PRODUCT BASED ON TITLE AND CATEGORY
-    public void searchProduct(Scanner scnr)
+    public void searchProduct(Scanner scnr, boolean isSearch)
     {
-        boolean repeat;
-
         do
         {
-            displaySearchMenu();
-            String choice = scnr.nextLine();
-            String query;
-            boolean found;
-            repeat = false;
 
-            switch (choice) 
+            System.out.println("\nWould you like to search a specific item? (Yes/No):");
+            System.out.print("--> ");
+            String searchChoice = scnr.nextLine();
+            
+            if (searchChoice.equalsIgnoreCase("Yes"))
             {
-                case "1":
-                    System.out.println("\n Enter the title to search for: ");
+                boolean repeat;
+
+                do
+                {
+
+                    displaySearchMenu();
+                    String choice = scnr.nextLine();
+                    String query;
+                    boolean found;
+                    repeat = false;
+
+                    System.out.println("\nEnter the title to search for:");
+                    System.out.print("--> ");
                     query = scnr.nextLine().toLowerCase();
                     found = false;
 
-                    for (Map.Entry<String, Product> entry : productMap.entrySet())
+                    switch (choice) 
                     {
-                        String title = entry.getKey().toLowerCase();
+                        case "1":
+
+                            System.out.println("\n_______________________________________________");
+                            System.out.println("                 Shopping Items");
+                            System.out.println("   ----------------------------------------\n");
+
+                            for (Map.Entry<String, Product> entry : productMap.entrySet())
+                            {
+                                String title = entry.getKey().toLowerCase();
+                                
+                                if (title.contains(query))
+                                {
+                                    Product foundProduct = entry.getValue();
+                                    viewProduct(foundProduct);
+                                    found = true;
+                                }
+                            }
+
+                            // IDK if we still need this
+                            // for (Product product : productList)
+                            // {
+                            //     String title = product.title.toLowerCase();
+                            //     
+                            //     if (title.contains(query))
+                            //     {
+                            //         viewProduct(product);
+                            //         found = true;
+                            //    }
+                            //}
+
+                            if (!found)
+                            {
+                                System.out.println("\n              No Products Found :(");
+                                System.out.println("\n   ----------------------------------------\n");
+                            }
+
+                            break;
                         
-                        if (title.contains(query))
-                        {
-                            Product foundProduct = entry.getValue();
-                            viewProduct(foundProduct);
-                            found = true;
-                        }
+                        case "2":
+
+                            System.out.println("\n_______________________________________________");
+                            System.out.println("                 Shopping Items");
+                            System.out.println("   ----------------------------------------\n");
+
+                            for (Product product : productList)
+                            {
+                                String category = product.category.toString().toLowerCase();
+                                
+                                if (category.contains(query))
+                                {
+                                    viewProduct(product);
+                                    found = true;
+                                }
+                            }
+
+                            if (!found)
+                            {
+                                System.out.println("\n              No Products Found :(");
+                                System.out.println("\n   ----------------------------------------\n");
+                            }
+                            
+                            break;
+
+                        default:
+                            System.out.println("\nInvalid Input. Please Try Again!");
+                            repeat = true;
+                            break;
                     }
 
-                    for (Product product : productList)
-                    {
-                        String title = product.title.toLowerCase();
-                        
-                        if (title.contains(query))
-                        {
-                            viewProduct(product);
-                            found = true;
-                        }
-                    }
+                } while (repeat);
 
-                    if (!found)
-                    {
-                        System.out.println("No products found.");
-                    }
-
-                    break;
-                
-                case "2":
-                    System.out.println("\n Enter the category to search for: ");
-                    query = scnr.nextLine().toLowerCase();
-                    found = false;
-
-                    for (Product product : productList)
-                    {
-                        String category = product.category.toString().toLowerCase();
-                        
-                        if (category.contains(query))
-                        {
-                            viewProduct(product);
-                            found = true;
-                        }
-                    }
-
-                    if (!found)
-                    {
-                        System.out.println("No products found.");
-                    }
-                    
-                    break;
-
-                default:
-                    System.out.println("Invalid search choice. Please try again!");
-                    repeat = true;
-                    break;
             }
 
-        } while (repeat);
-        
+        } while (isSearch);
+
     }
 
     

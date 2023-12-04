@@ -125,7 +125,7 @@ public class ShoppingCart {
                 
                 else
                 {
-                    System.out.println("Invalid Input. Please Try Again!");
+                    System.out.println("\nInvalid Input. Please Try Again!");
                 }
 
             } while(repeat);   

@@ -109,6 +109,7 @@ public class Main{
 
                             inventory.viewAllProducts(false);
                             inventory.sortProduct(scnr, false, true);
+                            inventory.searchProduct(scnr, true);
                             userCart.addProduct(scnr, inventory);
                             displayUserMenu();
                         
