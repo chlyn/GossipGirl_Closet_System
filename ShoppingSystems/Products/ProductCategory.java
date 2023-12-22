@@ -1,4 +1,4 @@
-package ShoppingSystem.Products;
+package ShoppingSystems.Products;
 
 public enum ProductCategory 
 {

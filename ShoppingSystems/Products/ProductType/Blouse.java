@@ -1,7 +1,7 @@
-package ShoppingSystem.Products.ProductType;
+package ShoppingSystems.Products.ProductType;
 
-import ShoppingSystem.Products.Product;
-import ShoppingSystem.Products.ProductCategory;
+import ShoppingSystems.Products.Product;
+import ShoppingSystems.Products.ProductCategory;
 
 public class Blouse extends Product
 {

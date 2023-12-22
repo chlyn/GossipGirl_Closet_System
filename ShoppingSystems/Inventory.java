@@ -1,8 +1,8 @@
-package ShoppingSystem;
+package ShoppingSystems;
 
 import java.util.*;
-import ShoppingSystem.Products.Product;
-import ShoppingSystem.Products.ProductCategory;
+import ShoppingSystems.Products.Product;
+import ShoppingSystems.Products.ProductCategory;
 
 public class Inventory 
 {
