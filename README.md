@@ -1,8 +1,8 @@
-# GossipGirl-Closet-System
+# GossipGirl Closet System
 
 ### Problem Statement:
 Assume, you and your team member are running a clothes shop. You and your team members
-are the only people to manage it. To make it manageable, you sell only couple (may be 5, 10, or
+are the only people to manage it. To make it manageable, you sell only couple (maybe 5, 10, or
 more, but at-least 4) of different types of products. Product type examples: TShirt, Shirt, Pant, Jeans. 
 
 Your project should have the following functionalites:
@@ -15,7 +15,7 @@ Your project should have the following functionalites:
     - Old to new
 4) Search
 
- ### Instructions on running program
+### Instructions on running program
 
 You will be prompted to create an Admin or User account. The program does not depend on which account you decide to go into first, the program will automatically generate 4 randomized product items. 
 Whenever first starting the program you must create a new account, the program does not store any login information. After creating an account you will be brought back to the "Admin or User" screen and can now log in. You will need two seperate logins for Admin and User.
