@@ -1,11 +1,14 @@
+package ShoppingSystem;
+
 import java.util.*;
+import ShoppingSystem.Products.Product;
+import ShoppingSystem.Products.ProductCategory;
 
 public class Inventory 
 {
 
     private HashMap<String, Product> productMap = new HashMap<>();
     private ArrayList<Product> productList = new ArrayList<>();
-    private ShoppingCart shoppingCart = new ShoppingCart();
 
     //METHOD FOR RANDOM PRODUCTS AT START OF PROGRAM
     public void autoGenerate() {

@@ -1,6 +1,10 @@
 import java.util.*;
 
-public class Main{
+import ShoppingSystem.Inventory;
+import ShoppingSystem.ShoppingCart;
+
+public class Main
+{
 
     public static void displayAdminMenu()
     {
